@@ -11,18 +11,15 @@ type EventStreamer struct {
 	ec *nats.EncodedConn
 }
 
-func Init() (s *EventStreamer, err error) {
+func Init() (*EventStreamer, error) {
 	nc, err := nats.Connect(nats.DefaultURL, nats.PingInterval(10*time.Second), nats.MaxPingsOutstanding(5))
 	if err != nil {
-		return
+		return nil, err
 	}
 
 	ec, err := nats.NewEncodedConn(nc, nats.JSON_ENCODER)
 
-	s.nc = nc
-	s.ec = ec
-
-	return
+	return &EventStreamer{nc: nc, ec: ec}, err
 }
 
 // Publish publishes the model argument to the subject queue
