@@ -35,8 +35,10 @@ func (s *EventStreamer) Request(subject string, model interface{}, res interface
 	return s.ec.Request(subject, model, res, timeout)
 }
 
+type Handler interface{}
+
 // Subscribe listens for models sent into the subject queue
-func (s *EventStreamer) Subscribe(subject string, callback func(model interface{})) (err error) {
+func (s *EventStreamer) Subscribe(subject string, callback Handler) (err error) {
 	_, err = s.ec.Subscribe(subject, callback)
 
 	return
