@@ -1,6 +1,7 @@
 package duey
 
 import (
+	"os"
 	"time"
 
 	"github.com/nats-io/nats.go"
@@ -12,7 +13,7 @@ type EventStreamer struct {
 }
 
 func Init() (*EventStreamer, error) {
-	nc, err := nats.Connect(nats.DefaultURL, nats.PingInterval(10*time.Second), nats.MaxPingsOutstanding(5))
+	nc, err := nats.Connect(os.Getenv("NATS_URI"), nats.PingInterval(10*time.Second), nats.MaxPingsOutstanding(5))
 	if err != nil {
 		return nil, err
 	}
