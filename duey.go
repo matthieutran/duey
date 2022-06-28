@@ -1,7 +1,6 @@
 package duey
 
 import (
-	"os"
 	"time"
 
 	"github.com/nats-io/nats.go"
@@ -12,8 +11,8 @@ type EventStreamer struct {
 	ec *nats.EncodedConn
 }
 
-func Init() (*EventStreamer, error) {
-	nc, err := nats.Connect(os.Getenv("NATS_URI"), nats.PingInterval(10*time.Second), nats.MaxPingsOutstanding(5))
+func Init(uri string) (*EventStreamer, error) {
+	nc, err := nats.Connect(uri, nats.PingInterval(10*time.Second), nats.MaxPingsOutstanding(5))
 	if err != nil {
 		return nil, err
 	}
